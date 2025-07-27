@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AppContext } from '../contexts/AppContext';
 import { showError, showSuccess } from '../utils/Toast';
@@ -29,7 +29,7 @@ const UpdateQuestion = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-     const updatedData={
+      const updatedData={
         title,description,image
     }
     try {
