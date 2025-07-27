@@ -17,10 +17,10 @@ const UserMenu = () => {
         localStorage.removeItem('userId');
         localStorage.removeItem('username');
         showSuccess("User logouted")
-        setInterval(()=>{
+        setTimeout(()=>{
         window.location.reload();
         navigate('/login');
-        },1500)
+        },1000)
         
     }
   return (

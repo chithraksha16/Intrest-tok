@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import  { useContext, useState } from 'react'
 import { AppContext } from '../contexts/AppContext'
 import { showError, showSuccess } from '../utils/Toast'
 import { useNavigate } from 'react-router-dom'
@@ -32,7 +32,7 @@ const Register = () => {
     <>
       <div className='w-full h-screen flex justify-center items-center bg-black'>
         <form onSubmit={handleSubmit} >
-        <div className='flex items-center flex-col w-[250px] h-72 justify-center md:w-sm  border-2 border-black outline-2 outline-white rounded-lg bg-white text-black p-10 rounded-ss-[50px] rounded-ee-[50px]'>
+        <div className='flex items-center flex-col w-full max-w-[250px] h-72 justify-center md:w-sm  border-2 border-black outline-2 outline-white rounded-lg bg-white text-black p-10 rounded-ss-[50px] rounded-ee-[50px]'>
           <h1 className='text-xl font-extrabold font-mono pt-5'>Register</h1>
           <div className='flex flex-col pt-7'>
 
