@@ -22,8 +22,7 @@ const Register = () => {
 
       }
       catch(error){
-        console.error("Registration error",error.response?.data || error.message)
-        showError("Registration error")
+        showError(error.response?.data.message || "Signup failed")
       }
 
   }

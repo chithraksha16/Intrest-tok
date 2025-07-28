@@ -22,14 +22,13 @@ const handlePost=async(e)=>{
     }
     
     catch(error){
-        console.log("Question not posted",error)
-        showError("Question is not posted");
+        showError(error.response?.data.message || "Question not posted");
     }
 
 }
 
 
-  return (
+return (
     <>
     <div className='w-full h-screen bg-black text-white flex justify-center items-center'>
         <div className=' w-[310px] md:w-xl h-82 bg-white text-black border-2 border-black outline-2 outline-white p-8 rounded-lg'>

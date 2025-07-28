@@ -1,9 +1,9 @@
-import React, { useState,useEffect } from 'react'
+import { useState,useEffect } from 'react'
 import Feed from './Feed'
 import { Link } from 'react-router-dom';
 import { IoIosAddCircle } from "react-icons/io";
 const Home = () => {
-   const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     // Trigger animation after component mounts
@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <>
       <div className='w-full h-auto bg-black'>
-        <section className="w-full bg-black pt-15 pb-5 px-6 md:px-12 lg:px-24 text-center">
+        <section className="w-full bg-black pt-15 pb-5 px-6 sm:px-12 text-center">
       <div
         className={`max-w-3xl mx-auto transition-opacity duration-1000 ease-out ${
           loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
@@ -22,7 +22,7 @@ const Home = () => {
         <h1 className="text-3xl md:text-5xl font-bold text-white mb-6">
           Got a question, idea, or something on your mind?
         </h1>
-        <p className="text-base md:text-lg text-gray-300 mb-8">
+        <p className="text-base sm:text-lg text-gray-300 mb-8">
           Start a discussion, share your thoughts, or just ask—nothing is too big or too small. <br />
           Say it your way — ask what you want, share what you feel, take it wherever you like.
         </p>
@@ -40,7 +40,7 @@ const Home = () => {
 
       </div>
     </section>
-        <div className='flex justify-center items-center p-10'>
+        <div className='flex justify-center items-center'>
           {loaded &&
             <Feed/>
           }

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import  { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../contexts/AppContext';
 import { Link } from 'react-router-dom';
 import { MdDelete, MdEdit } from 'react-icons/md';
@@ -18,7 +18,7 @@ const MyQuestions = () => {
         const questionList = questions?.data?.questions;
         setUserQuestions(Array.isArray(questionList) ? questionList : []);
       } catch (err) {
-        console.error("Could not fetch questions", err);
+      throw err
       }
     };
 
@@ -95,9 +95,9 @@ const MyQuestions = () => {
 
   return (
     <>
-    <div className='w-full bg-black  min-h-screen p-10'>
-    <div className="max-w-3xl mx-auto p-6 ">
-      <h2 className="text-2xl font-bold mb-6 text-white">My Questions</h2>
+    <div className='w-full bg-black  min-h-screen py-10'>
+    <div className="max-w-2xl mx-auto p-5 ">
+      <h2 className="text-2xl font-bold mb-5 text-white">My Questions</h2>
 
       {userQuestions.length === 0 ? (
         <p className="text-gray-400 text-center">You haven't asked any questions yet.</p>
@@ -105,12 +105,15 @@ const MyQuestions = () => {
         <ul className="space-y-6">
           {userQuestions.map((q) => (
             <li key={q._id} className="bg-gray-900 p-5 rounded-lg shadow text-white">
-              <div className="flex justify-between items-center">
+              <div className="flex flex-col justify-between  gap-2">
                 <div>
                   <h3 className="text-xl font-semibold">{q.title}</h3>
                   <p className="text-sm text-gray-400">{q.description || 'No description.'}</p>
+                  <div>{q.image && (
+                    <img  src={q.image} height={150} width={200}/>
+                  )}</div>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex  gap-3 pt-3">
                   <Link to={`/updateQuestion/${q._id}`} className="text-yellow-400 hover:text-yellow-300">
                     <MdEdit size={20} />
                   </Link>

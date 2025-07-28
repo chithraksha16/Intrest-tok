@@ -69,7 +69,7 @@ const toggleAnswers = (questionId) => {
     
     }
     catch(error){
-          showError("Answer not posted")
+      showError("Answer not posted")
     }
   };
 
@@ -98,13 +98,11 @@ const toggleAnswers = (questionId) => {
   
     ))
 
-
     setCommentContent('');
     setShowCommentModal(false);
     setCurrentAnswerId(null);
     setQuestion
   } catch (error) {
-    console.error("Error: comment not posted", error);
     showError("Comment not posted")
   }
 };
@@ -123,8 +121,7 @@ const handleDeleteAns=async(answerId)=>{
       )
     }
     catch (error) {
-    console.error("Error: Not deleted", error);
-    showError("Answer not deleted")
+    showError(error.response.data.message || "Answer not deleted")
   }
 
 }
@@ -150,8 +147,7 @@ const handleDeleteCom=async(commentId)=>{
       )
     }
     catch(error){
-        console.error("Error: comment not deleted",error)
-        showError("Comment not deleted")
+        showError(error.response.data.message ||"Comment not deleted")
     }
 }
 const handleDeleteques=async(questionId)=>{
@@ -163,8 +159,7 @@ const handleDeleteques=async(questionId)=>{
     setQuestion(curr=>curr.filter(q=>q._id !== questionId))
   }
   catch(error){
-    console.error("Error:question not deleted",error)
-    showError("Question not deleted");
+    showError(error.response.data.message || "Question not deleted");
   }
 }
 
@@ -197,7 +192,7 @@ const handlelikequestion = async (questionId) => {
       )
     );
   } catch (error) {
-    console.error("Failed to toggle like:", error);
+    throw error
   }
 };
 const handleLikeAnswer = async (answerId) => {
@@ -232,14 +227,13 @@ const handleLikeAnswer = async (answerId) => {
       }))
     );
   } catch (err) {
-    console.error("Like/unlike failed", err);
+  throw err
   }
 };
 
 const handleLikeComment = async (commentId) => {
   const userId = localStorage.getItem('userId');
   if (!userId) {
-    console.error("User not logged in");
     return;
   }
 
@@ -254,7 +248,6 @@ const handleLikeComment = async (commentId) => {
   });
 
   if (!foundComment) {
-    console.error("Comment not found");
     return;
   }
 
@@ -262,13 +255,10 @@ const handleLikeComment = async (commentId) => {
   const hasLiked = likedBy.some(id => id.toString() === userId.toString());
 
   const action = hasLiked ? 'unlike' : 'like';
-  console.log('Liking action:', action);
 
   try {
     const response = await likeAndUnlikeComment(commentId, action);
     const { likesCount, likedBy: updatedLikedBy } = response.data;
-
-    console.log("Like comment API response:", response.data);
 
     // Defensive update - check ans.comments exists before mapping
     setQuestion(prev =>
@@ -283,22 +273,22 @@ const handleLikeComment = async (commentId) => {
       }))
     );
   } catch (error) {
-    console.error("Error toggling comment like:", error.response?.data || error.message);
+    throw error
   }
 };
 
 
   return (
-    <div className="p-4 max-w-3xl mx-auto">
+    <div className=" w-full p-4 max-w-4xl mx-2">
       {/* Search Bar */}
-      <div className="mb-8">
-  <div className="relative left-4">
+    <div className="mb-8">
+  <div className="relative">
     <input
       type="search"
       placeholder="Search questions..."
       value={searchTerm}
       onChange={e => setSearchTerm(e.target.value)}
-      className="w-full pl-10 pr-4 py-3 rounded-md bg-black border border-indigo-600 text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:outline-none shadow-sm transition duration-200"
+      className="w-full px-10 py-3 rounded-md bg-black border border-indigo-600 text-gray-800 placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:outline-none shadow-sm transition duration-200"
     />
     <svg
       className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
@@ -319,7 +309,7 @@ const handleLikeComment = async (commentId) => {
         filteredQuestions.map((q, index) => (
           <div
             key={q._id || index}
-            className="bg-black w-[300px] p-6 md:w-4xl lg:w-3xl rounded-lg shadow-lg shadow-blue-500/10  border-1 border-slate-500 mb-10 text-white rounded-ss-4xl"
+            className="bg-black p-6  shadow-lg shadow-blue-500/10  border-1 border-slate-800 mb-10 text-white rounded-xl"
           >
             {/* User Info */}
             <div className="flex items-center gap-3 mb-3">
@@ -331,20 +321,27 @@ const handleLikeComment = async (commentId) => {
             </div>
 
             {/* Question Title */}
-            <h3 className="text-lg font-extrabold mb-3">{q.title}</h3>
+            <h3 className="sm:text-lg text-sm font-extrabold mb-3">{q.title}</h3>
+
+            
+              {q.image &&(
+                <img  src={q.image} height={150} width={200}/>
+              )
+              }
 
             {/* Description */}
-            <p className="text-base text-gray-300 mb-5 leading-relaxed">
+            <p className="sm:text-base text-xs text-gray-300 mb-2 leading-relaxed">
               {q.description || 'No description provided.'}
             </p>
+            
 
             {/* Likes and Actions */}
-            <div className="flex gap-3 md:gap-8 items-center mt-3 mb-5 text-[10px] md:text-sm text-gray-400 ">
-              <button onClick={()=>handlelikequestion(q._id)} className="flex items-center gap-1 md:gap-2 hover:text-white transition">
-                <span className="md:text-lg text-sm">👍</span> <span>{q.likesCount || 0}</span>
+            <div className="flex gap-3 sm:gap-8 items-center my-4 text-[10px] sm:text-sm text-gray-400 ">
+              <button onClick={()=>handlelikequestion(q._id)} className="flex items-center gap-1 sm:gap-2 hover:text-white">
+                <span className="sm:text-lg text-sm">👍</span> <span>{q.likesCount || 0}</span>
               </button>
               <button
-                className="hover:text-white transition font-medium"
+                className="hover:text-white font-medium"
                 onClick={() => {
                   setCurrentQuestionId(q._id);
                   setShowAnswerModal(true);
@@ -357,13 +354,13 @@ const handleLikeComment = async (commentId) => {
               </div>
               <div className='md:text-lg text-md  flex items-center'>
               <button onClick={()=>handleDeleteques(q._id)}><MdDelete /></button>
-                            </div>
+              </div>
               
               {q.answers && q.answers.length > 0 && (
                 <div className='md:ml-auto'>
                 <button
                   onClick={() => toggleAnswers(q._id)}
-                  className="text-indigo-400 hover:text-indigo-600 font-semibold  text-[10px] md:text-sm transition"
+                  className="text-indigo-400 hover:text-indigo-600 font-semibold  text-[10px] sm:text-sm transition"
                 >
                   {openAnswers[q._id] ? 'Hide Answers' : `Show Answers (${q.answers.length})`}
                 </button>
@@ -373,8 +370,8 @@ const handleLikeComment = async (commentId) => {
 
             {/* Answers Section - Collapsible */}
             {openAnswers[q._id] && q.answers && q.answers.length > 0 && (
-              <div className="bg-gray-900 p-5 rounded-lg shadow-inner border border-gray-700 mt-6">
-                <h4 className="text-base font-semibold mb-4 text-white border-b border-gray-700 pb-2">
+              <div className="bg-gray-900 p-5 rounded-lg shadow-inner border border-gray-800 mt-6">
+                <h4 className="text-base font-semibold mb-4 text-white border-b border-gray-800 pb-2">
                   Answers:
                 </h4>
                 {q.answers.map((ans) => (

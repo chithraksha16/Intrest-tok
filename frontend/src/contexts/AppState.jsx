@@ -1,5 +1,5 @@
 import { AppContext } from "./AppContext";
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useLocation } from "react-router-dom";
 const AppState = (props) => {
@@ -12,8 +12,8 @@ const AppState = (props) => {
   
 
  const likeAndUnlikeComment=async(commentId,action)=>{
-   const token=localStorage.getItem('token');
-   try{
+  const token=localStorage.getItem('token');
+  try{
         const response= await axios.patch(`${baseUrl}/comment/${commentId}/like`,{
           action
         },
@@ -26,14 +26,13 @@ const AppState = (props) => {
       return response
       }
       catch(error){
-    console.error("like error",error.response?.data || error.message);
     throw error
   }
 
  }
   const likeAndUnlikeAnswer=async(answerId,action)=>{
     const token=localStorage.getItem('token');
-   try{
+  try{
         const response= await axios.patch(`${baseUrl}/answer/${answerId}/like`,{
           action
         },
@@ -46,7 +45,6 @@ const AppState = (props) => {
       return response
       }
       catch(error){
-    console.error("like error",error.response?.data || error.message);
     throw error
   }
 }
@@ -67,7 +65,6 @@ const likeAndUnlikeQuestion=async(questionId,action)=>{
       return response
       }
       catch(error){
-    console.error("like error",error.response?.data || error.message);
     throw error
   }
 }
@@ -85,7 +82,6 @@ const deleteAnswer=async(answerId)=>{
     return response
   }
   catch(error){
-    console.error("Answer deleteing error",error.response?.data || error.message);
     throw error
   }
 
@@ -103,7 +99,6 @@ const deleteComment=async(commentId)=>{
       return response
     }
     catch(error){
-    console.error("comment deleteing error",error.response?.data || error.message);
     throw error
   }
 }
@@ -122,7 +117,6 @@ const deleteComment=async(commentId)=>{
         return response
         }
         catch(error){
-    console.error("Answer posting error",error.response?.data || error.message);
     throw error
   }
   }
@@ -141,7 +135,6 @@ const postAnswer=async(questionId,content)=>{
     return response
   }
   catch(error){
-    console.error("Answer posting error",error.response?.data || error.message);
     throw error
   }
 }
@@ -158,7 +151,6 @@ try{
   return response
 }
 catch(error){
-    console.error("Question deleting  error",error.response?.data || error.message);
     throw error
   }
 
@@ -179,7 +171,6 @@ try{
 return response
 }
 catch(error){
-    console.error("Question Updating error",error.response?.data || error.message);
     throw error
   }
 }
@@ -195,7 +186,6 @@ const getSingleQuestion=async(questionId)=>{
       return response
     }
     catch(error){
-    console.error("Answer posting error",error.response?.data || error.message);
     throw error
   }
 }
@@ -215,7 +205,6 @@ const postQuestion=async(title,description,image)=>{
       return response
     }
     catch(error){
-      console.error("Question posting wrong",error.response?.data || error.message);
       throw error
     }
 }
@@ -231,7 +220,6 @@ const getUserQuestion=async(userId)=>{
       return response
     }
     catch(error){
-      console.error("Question fectching error",error.response?.data || error.message);
       throw error
     }
 }
@@ -246,7 +234,6 @@ const getUserQuestion=async(userId)=>{
       },
       withCredentials:true
     })
-    console.log(response)
     setQuestion(response.data.questions)
     }
     fetchQuestion();
@@ -269,7 +256,6 @@ const register=async(name,email,password)=>{
       return response;
   }
   catch(error){
-    console.error("Registration failed",error.response?.data || error.message);
     throw error
   }
 
@@ -293,7 +279,6 @@ const login=async(email,password)=>{
     return response
   }
     catch(error){
-      console.error("Login error",error.response?.data || error.message);
       throw error
     }
 }

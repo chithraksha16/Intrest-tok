@@ -26,8 +26,7 @@ export const registerUser=async(req,res)=>{
     },})
     }
     catch (err) {
-        console.error('Registration error:', err);
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: err.message });
     }
 }
 
@@ -48,15 +47,14 @@ export const loginUser=async(req,res)=>{
     }
 
     const token= jwt.sign({userId:user._id,email:user.email},process.env.SECRET_KEY,{expiresIn:"1d"})
-        res.status(200).json({message:"User logedIn",user:{
+        res.status(200).json({message:"User loged",user:{
             id:user._id,
             name:user.name,
             email:user.email
         },token})
     }
     catch (err) {
-        console.error('Registration error:', err);
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: err.message });
     }
 
 }

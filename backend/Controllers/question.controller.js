@@ -42,15 +42,7 @@ try {
       })
       .populate('askedBy', 'name') // Populate the user who asked the question
       .sort({ createdAt: -1 });
-    //.populate({
-       // path: 'answers',
-       // populate: {
-        //path: 'answeredBy',
-       // select: 'name' 
-        //}
-    //})
-     // .populate('askedBy', 'name') // Populate the user who asked the question
-      //.sort({ createdAt: -1 }); // Optional: sort by newest
+    
 
     res.status(200).json({ questions }); 
 } catch (error) {
@@ -148,48 +140,7 @@ catch(error){
 }
 }
 
-// export const likeandUnlike = async (req, res) => {
-//   try {
-//     const questionId = req.params.id;
-//     const userId = req.user._id; // assuming you're using auth middleware
-//     const action = req.body.action;
-//     console.log("Like/unlike request body:", req.body);       // check what action you receive
-//     console.log("Question ID param:", req.params.id);
-//     console.log("User ID from auth middleware:", req.user._id);
 
-
-//     const question = await Question.findById(questionId);
-//     if (!question) return res.status(404).json({ message: "Question not found" });
-
-//     const hasLiked = question.likedBy.includes(userId);
-
-//     if (action === 'like') {
-//       if (hasLiked) {
-//         return res.status(400).json({ message: "You have already liked this question." });
-//       }
-//       question.likesCount += 1;
-//       question.likedBy.push(userId);
-//     } else if (action === 'unlike') {
-//       if (!hasLiked) {
-//         return res.status(400).json({ message: "You haven't liked this question yet." });
-//       }
-//       question.likesCount = Math.max(0, question.likesCount - 1);
-//       question.likedBy = question.likedBy.filter(id => id.toString() !== userId);
-//     } else {
-//       return res.status(400).json({ message: "Invalid action. Use 'like' or 'unlike'." });
-//     }
-
-//     await question.save();
-
-//     res.json({
-//       message: `Question successfully ${action}d.`,
-//       likesCount: question.likesCount,
-//       likedBy: question.likedBy  
-//     });
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
 
 
 export const likeandUnlike = async (req, res) => {

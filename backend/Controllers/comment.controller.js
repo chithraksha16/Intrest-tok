@@ -56,62 +56,25 @@ export const deleteComment=async(req,res)=>{
 }
 
 
-// export const likeAndUnlikeComment = async (req, res) => {
-//   try {
-//     const commentId = req.params.id;
-//     const userId = req.user.id; // Must be authenticated
-//     const action = req.body.action;
 
-//     const comment = await Comment.findById(commentId);
-//     if (!comment) return res.status(404).json({ message: "Comment not found" });
-
-//     const hasLiked = comment.likedBy.includes(userId);
-
-//     if (action === 'like') {
-//       if (hasLiked) {
-//         return res.status(400).json({ message: "You already liked this comment." });
-//       }
-//       comment.likesCount += 1;
-//       comment.likedBy.push(userId);
-//     } else if (action === 'unlike') {
-//       if (!hasLiked) {
-//         return res.status(400).json({ message: "You haven't liked this comment yet." });
-//       }
-//       comment.likesCount = Math.max(0, comment.likesCount - 1);
-//       comment.likedBy = comment.likedBy.filter(id => id.toString() !== userId);
-//     } else {
-//       return res.status(400).json({ message: "Invalid action. Use 'like' or 'unlike'." });
-//     }
-
-//     await comment.save();
-
-//     res.json({
-//       message: `Comment successfully ${action}d.`,
-//       likesCount: comment.likesCount,
-//     });
-
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
 export const likeAndUnlikeComment = async (req, res) => {
   try {
     const commentId = req.params.id;
     const userId = req.user._id; // Auth middleware must set this
     const action = req.body.action; // Should be either "like" or "unlike"
 
-    // 1. Find the comment
+    //  Find the comment
     const comment = await Comment.findById(commentId);
     if (!comment) {
       return res.status(404).json({ message: "Comment not found" });
     }
 
-    // 2. Check if user already liked it
+    //  Check if user already liked it
     const hasLiked = comment.likedBy.some(
       (id) => id.toString() === userId.toString()
     );
 
-    // 3. Apply the like or unlike logic
+    //  Apply the like or unlike logic
     if (action === "like") {
       if (hasLiked) {
         return res.status(400).json({ message: "You already liked this comment." });
@@ -130,7 +93,7 @@ export const likeAndUnlikeComment = async (req, res) => {
       return res.status(400).json({ message: "Invalid action. Use 'like' or 'unlike'." });
     }
 
-    // 4. Save and respond
+    //  Save and respond
     await comment.save();
 
     res.status(200).json({
@@ -140,7 +103,6 @@ export const likeAndUnlikeComment = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("Like/unlike comment error:", error);
     res.status(500).json({ message: error.message });
   }
 };

@@ -43,7 +43,6 @@ export const createAnswer=async(req,res)=>{
         res.status(201).json({message:"Answer posted",answer});
     }
     catch (err) {
-    console.error('Error creating answer:', err);
     res.status(500).json({ error: 'Internal server error.' });
 }
 }
@@ -70,44 +69,7 @@ export const deleteAnswer=async(req,res)=>{
 }
 
 
-// export const likeAndUnlikeAnswer = async (req, res) => {
-//   try {
-//     const answerId = req.params.id;
-//     const userId = req.user._id; // Make sure user is authenticated
-//     const action = req.body.action;
 
-//     const answer = await Answer.findById(answerId);
-//     if (!answer) return res.status(404).json({ message: "Answer not found" });
-
-//     const hasLiked = answer.likedBy.includes(userId);
-
-//     if (action === 'like') {
-//       if (hasLiked) {
-//         return res.status(400).json({ message: "You already liked this answer." });
-//       }
-//       answer.likesCount += 1;
-//       answer.likedBy.push(userId);
-//     } else if (action === 'unlike') {
-//       if (!hasLiked) {
-//         return res.status(400).json({ message: "You haven't liked this answer yet." });
-//       }
-//       answer.likesCount = Math.max(0, answer.likesCount - 1);
-//       answer.likedBy = answer.likedBy.filter(id => id.toString() !== userId);
-//     } else {
-//       return res.status(400).json({ message: "Invalid action. Use 'like' or 'unlike'." });
-//     }
-
-//     await answer.save();
-
-//     res.json({
-//       message: `Answer successfully ${action}d.`,
-//       likesCount: answer.likesCount,
-//     });
-
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
 
 
 export const likeAndUnlikeAnswer = async (req, res) => {
@@ -116,18 +78,18 @@ export const likeAndUnlikeAnswer = async (req, res) => {
     const userId = req.user._id; // Assumes you have an auth middleware
     const action = req.body.action; // Expected values: "like" or "unlike"
 
-    // 1. Fetch the answer
+    //  Fetch the answer
     const answer = await Answer.findById(answerId);
     if (!answer) {
       return res.status(404).json({ message: "Answer not found" });
     }
 
-    // 2. Check if the user has already liked it
+    //  Check if the user has already liked it
     const hasLiked = answer.likedBy.some(
       (id) => id.toString() === userId.toString()
     );
 
-    // 3. Perform the like or unlike action
+    //  Perform the like or unlike action
     if (action === "like") {
       if (hasLiked) {
         return res.status(400).json({ message: "You already liked this answer." });
@@ -146,7 +108,7 @@ export const likeAndUnlikeAnswer = async (req, res) => {
       return res.status(400).json({ message: "Invalid action. Use 'like' or 'unlike'." });
     }
 
-    // 4. Save and respond
+    //  Save and respond
     await answer.save();
 
     res.status(200).json({
@@ -155,7 +117,6 @@ export const likeAndUnlikeAnswer = async (req, res) => {
       likedBy: answer.likedBy,
     });
   } catch (error) {
-    console.error("Like/unlike answer error:", error);
     res.status(500).json({ message: error.message });
   }
 };

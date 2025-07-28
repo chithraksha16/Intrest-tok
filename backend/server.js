@@ -13,6 +13,8 @@ dotenv.config();
 const app=express();
 const PORT=process.env.PORT || 3000 ;
 
+await dbConnection();
+
 //middlewares
 app.use(express.json());
 
@@ -29,14 +31,11 @@ app.use('/api',questionRouter);
 app.use('/api',answerRouter);
 app.use('/api',commentRouter);
 
-app.get('/',(req,res)=>{
-    res.send("hello chithraksha");
-})
+
 
 
 
 
 app.listen(PORT,()=>{
     console.log(`server is running on PORT ${PORT}`);
-    dbConnection();
 })

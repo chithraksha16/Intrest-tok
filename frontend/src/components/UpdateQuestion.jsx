@@ -20,7 +20,7 @@ const UpdateQuestion = () => {
         setDescription(q.description || '');
         setImage(q.image || '');
     } catch (err) {
-        console.error('Failed to load question:', err);
+    throw err
     }
     };
 
@@ -40,8 +40,7 @@ const UpdateQuestion = () => {
       navigate('/');
       showSuccess(result.data.message)
     } catch (error) {
-      console.error('Failed to update question:', error);
-      showError("Question not updated");
+      showError(error.response.data.message);
     }
   };
 
