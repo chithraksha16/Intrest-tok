@@ -281,7 +281,7 @@ const handleLikeComment = async (commentId) => {
   return (
     <div className=" w-full p-4 max-w-4xl mx-2">
       {/* Search Bar */}
-    <div className="mb-8">
+    <div className="mb-10">
   <div className="relative">
     <input
       type="search"
@@ -445,7 +445,7 @@ const handleLikeComment = async (commentId) => {
           </div>
         ))
       ) : (
-        <p className="text-white text-center">No questions found.</p>
+        <p className="text-white text-center py-5">No questions found.</p>
       )}
 
       {/* Answer Modal */}
