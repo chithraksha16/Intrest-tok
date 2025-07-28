@@ -8,7 +8,7 @@ const AppState = (props) => {
   const [question,setQuestion]=useState([]);
   const [userName,setUserName]=useState(()=>localStorage.getItem('username') || null)
   const location=useLocation();
-  const baseUrl="http://localhost:8080/api"
+  const baseUrl=`${process.env.REACT_APP_API_URL}/api`
   
 
  const likeAndUnlikeComment=async(commentId,action)=>{
