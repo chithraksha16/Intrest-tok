@@ -24,6 +24,9 @@ app.use(cors({
     credentials:true
 }))
 
+app.get("/",(req,res)=>{
+    res.send("Hello ping")
+})
 
 //api routes
 app.use('/api',userRoutes);

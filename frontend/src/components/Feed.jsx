@@ -445,7 +445,7 @@ const handleLikeComment = async (commentId) => {
           </div>
         ))
       ) : (
-        <p className="text-white text-center py-5">No questions found.</p>
+        <p className="text-white text-center py-5 pt-10">No questions found.</p>
       )}
 
       {/* Answer Modal */}

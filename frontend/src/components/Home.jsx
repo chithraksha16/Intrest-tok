@@ -12,7 +12,7 @@ const Home = () => {
   }, []);
   return (
     <>
-      <div className='w-full h-auto bg-black'>
+      <div className='w-full h-screen bg-black'>
         <section className="w-full bg-black pt-25 pb-10 px-6 sm:px-12 text-center">
       <div
         className={`max-w-3xl mx-auto transition-opacity duration-1000 ease-out ${
